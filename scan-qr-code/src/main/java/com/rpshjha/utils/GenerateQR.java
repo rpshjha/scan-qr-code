@@ -35,7 +35,7 @@ public class GenerateQR {
     }
 
     public static String generate(String qrCodeText, String filename) throws IOException, WriterException {
-        String path = System.getProperty("user.dir") + separator + "src" + separator + "test" + separator + "resources" + separator + "qrcode" + separator + filename;
+        String path = System.getProperty("user.dir") + separator + "src" + separator + "test" + separator + "resources" + separator + filename;
         String charset = "UTF-8";
         Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<>();
         hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
