@@ -29,12 +29,9 @@ public class QRCodeScannerDemoTest {
     public static void placeQRCode() throws IOException, WriterException, ParserConfigurationException, SAXException {
         String filename = "custom.png";
         String fromFile = GenerateQR.generate(getQRCodeText(), filename);
-        String toFile = "";
-        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            toFile = System.getProperty("user.home") + separator + "Library" + separator + "Android" + separator + "sdk" + separator + "emulator" + separator + "resources" + separator + filename;
-        } else if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-            toFile = System.getProperty("user.home") + separator + "tools" + separator + "android-sdk" + separator + "emulator" + separator + "resources" + separator + filename;
-        }
+
+        final String ANDROID_HOME = System.getenv("ANDROID_HOME");
+        String toFile = ANDROID_HOME + separator + "emulator" + separator + "resources" + separator + filename;
         FileUtils.moveFileToResources(fromFile, toFile);
     }
 
