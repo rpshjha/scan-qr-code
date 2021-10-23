@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 import static com.rpshjha.core.AppiumDriverInstance.*;
+import static java.io.File.separator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -28,7 +29,12 @@ public class QRCodeScannerDemoTest {
     public static void placeQRCode() throws IOException, WriterException, ParserConfigurationException, SAXException {
         String filename = "custom.png";
         String fromFile = GenerateQR.generate(getQRCodeText(), filename);
-        String toFile = System.getProperty("user.home") + "/Library/Android/sdk/emulator/resources/" + filename;
+        String toFile = "";
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            toFile = System.getProperty("user.home") + separator + "Library" + separator + "Android" + separator + "sdk" + separator + "emulator" + separator + "resources" + separator + filename;
+        } else if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+            toFile = System.getProperty("user.home") + separator + "tools" + separator + "android-sdk" + separator + "emulator" + separator + "resources" + separator + filename;
+        }
         FileUtils.moveFileToResources(fromFile, toFile);
     }
 
