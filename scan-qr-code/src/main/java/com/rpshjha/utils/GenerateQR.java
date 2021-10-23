@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.io.File.separator;
+
 /**
  * Created by IntelliJ IDEA.
  * User: rupeshkumar
@@ -33,7 +35,7 @@ public class GenerateQR {
     }
 
     public static String generate(String qrCodeText, String filename) throws IOException, WriterException {
-        String path = System.getProperty("user.dir") + "/src/test/resources/qrcode/" + filename;
+        String path = System.getProperty("user.dir") + separator + "src" + separator + "test" + separator + "resources" + separator + "qrcode" + separator + filename;
         String charset = "UTF-8";
         Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<>();
         hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
