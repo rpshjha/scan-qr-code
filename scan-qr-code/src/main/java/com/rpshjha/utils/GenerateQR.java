@@ -26,21 +26,24 @@ import static java.io.File.separator;
  */
 public class GenerateQR {
 
+    private GenerateQR() {
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(GenerateQR.class);
 
-    private static void generate(String data, String path, String charset, Map map, int h, int w) throws WriterException, IOException {
+    private static void generate(String data, String path, String charset, Map<EncodeHintType, ErrorCorrectionLevel> map) throws WriterException, IOException {
         LOGGER.info("generating QR code for text " + data);
-        BitMatrix matrix = new MultiFormatWriter().encode(new String(data.getBytes(charset), charset), BarcodeFormat.QR_CODE, w, h, map);
-        MatrixToImageWriter.writeToFile(matrix, path.substring(path.lastIndexOf('.') + 1), new File(path));
+        BitMatrix matrix = new MultiFormatWriter().encode(new String(data.getBytes(charset), charset), BarcodeFormat.QR_CODE, 80, 80, map);
+        MatrixToImageWriter.writeToPath(matrix, path.substring(path.lastIndexOf('.') + 1), new File(path).toPath());
     }
 
     public static String generate(String qrCodeText, String filename) throws IOException, WriterException {
         String path = System.getProperty("user.dir") + separator + "src" + separator + "test" + separator + "resources" + separator + filename;
         String charset = "UTF-8";
-        Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<>();
-        hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-        GenerateQR.generate(qrCodeText, path, charset, hashMap, 80, 80);
-        System.out.println("QR Code created successfully and placed at " + path);
+        Map<EncodeHintType, ErrorCorrectionLevel> enumMap = new HashMap<>();
+        enumMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+        GenerateQR.generate(qrCodeText, path, charset, enumMap);
+        LOGGER.info("QR Code created successfully and placed at " + path);
         return path;
     }
 }
