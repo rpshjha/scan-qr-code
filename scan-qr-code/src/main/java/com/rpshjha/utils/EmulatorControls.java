@@ -26,14 +26,13 @@ public class EmulatorControls {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmulatorControls.class);
 
-    private static final String SDK_PATH = System.getProperty("user.home") + separator + "Library" + separator + "Android" + separator + "sdk";
-    private static final String EMULATOR_PATH = SDK_PATH + separator + "emulator" + separator + "emulator";
-    private static final String ADB_PATH = SDK_PATH + separator + "platform-tools" + separator + "adb";
-    private static final String AVD_MANAGER_PATH = SDK_PATH + separator + "tools" + separator + "bin" + separator + "avdmanager";
-    private static final String SDK_MANAGER_PATH = SDK_PATH + separator + "tools" + separator + "bin" + separator + "sdkmanager";
+    private static final String ANDROID_SDK_PATH = System.getenv("ANDROID_HOME");
+    private static final String EMULATOR_PATH = ANDROID_SDK_PATH + separator + "emulator" + separator + "emulator";
+    private static final String ADB_PATH = ANDROID_SDK_PATH + separator + "platform-tools" + separator + "adb";
+    private static final String AVD_MANAGER_PATH = ANDROID_SDK_PATH + separator + "tools" + separator + "bin" + separator + "avdmanager";
+    private static final String SDK_MANAGER_PATH = ANDROID_SDK_PATH + separator + "tools" + separator + "bin" + separator + "sdkmanager";
 
     public static void launchAVD(String nameOfAVD) {
-
         String[] aCommand = new String[]{EMULATOR_PATH, "-avd", nameOfAVD, "-no-snapshot", "-no-boot-anim"};
         String line;
         try {
@@ -48,6 +47,21 @@ public class EmulatorControls {
                 LOGGER.info("Emulator ->> " + nameOfAVD + " launched successfully!");
             else
                 throw new Exception("Emulator ->> " + nameOfAVD + " could not be launched");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void launchAVD() {
+        createAVD();
+        String[] command = new String[]{"sh", "bashscript/launch_avd.sh"};
+        String line;
+        try {
+            Process process = new ProcessBuilder(command).start();
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = input.readLine()) != null) {
+                System.out.println(line);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +97,6 @@ public class EmulatorControls {
         String line;
         try {
             Process process = new ProcessBuilder(command).start();
-//            process.waitFor();
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
             while ((line = input.readLine()) != null) {
                 System.out.println(line);
@@ -142,20 +155,6 @@ public class EmulatorControls {
         return listOfSystemImages;
     }
 
-    public static void launchAVD() {
-        String[] command = new String[]{"sh", "bashscript/launch_avd.sh"};
-        String line;
-        try {
-            Process process = new ProcessBuilder(command).start();
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            while ((line = input.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private static void downloadSystemImages(String androidPackageName) {
         String[] command = new String[]{SDK_MANAGER_PATH, "--install", androidPackageName};
 
@@ -171,7 +170,6 @@ public class EmulatorControls {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
+    
 }
