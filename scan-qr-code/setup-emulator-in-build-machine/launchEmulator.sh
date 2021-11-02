@@ -1,7 +1,10 @@
 #!/bin/bash
 
-echo "Current workspace is $WORKSPACE"
-user_home=$(bash -c "cd ~$(printf %q $USER) && pwd")
 deviceName="TestDevice"
+
+echo "launching avd $deviceName"
+
 # Launch the emulator
 $WORKSPACE/android/emulator/emulator @$deviceName
+
+echo "avd started"
