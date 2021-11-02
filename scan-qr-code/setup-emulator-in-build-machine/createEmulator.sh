@@ -1,12 +1,14 @@
 #!/bin/bash
 
-echo "Current workspace is $WORKSPACE"
+
 
 # Configuration
 androidSdkVersion="29"
 deviceName="TestDevice"
 deviceProfile="pixel_xl" # See available profiles with: avdmanager list device
 includePlayStore=false # See if SDK Version & Play Store are available together with: sdkmanager --list
+
+echo "creating avd with name $deviceName"
 
 # Obtain the AVD image
 imageName=""
