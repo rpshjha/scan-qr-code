@@ -39,7 +39,7 @@ public class QRCodeScannerDemoTest {
 
     @BeforeEach
     public void setup() {
-        launchAVD();
+        //launchAVD();
         DeviceDetails deviceDetails = new Android().getDevices().stream().findAny().get();
         setupAppium(deviceDetails);
         wait = new WebDriverWait(getAppiumDriver(), 30L);
@@ -73,7 +73,7 @@ public class QRCodeScannerDemoTest {
     @AfterEach
     public void tearDown() {
         quitAppiumDriver();
-        killActiveEmulators();
+        //killActiveEmulators();
     }
 
     private static String getQRCodeText() {
