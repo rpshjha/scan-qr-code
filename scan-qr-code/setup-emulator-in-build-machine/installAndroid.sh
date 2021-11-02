@@ -12,3 +12,5 @@ cd cmdline-tools
 mkdir tools
 mv ./bin/ ./tools/
 mv ./lib/ ./tools/
+
+echo "android sdk successfully installed"
