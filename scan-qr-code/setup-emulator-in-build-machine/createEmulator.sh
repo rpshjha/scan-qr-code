@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 # Configuration
 androidSdkVersion="29"
 deviceName="TestDevice"
@@ -33,4 +31,5 @@ $WORKSPACE/android/cmdline-tools/tools/bin/avdmanager create avd \
   --force \
   --name "$deviceName" \
   --package $imageName
-
+  
+  echo "avd created sucessfully"
