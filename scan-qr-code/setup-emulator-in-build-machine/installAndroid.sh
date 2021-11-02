@@ -1,8 +1,7 @@
 #!/bin/bash
-echo "Current workspace is $WORKSPACE"
-mkdir android
-user_home=$(bash -c "cd ~$(printf %q $USER) && pwd")
+echo "installing android sdk in $WORKSPACE"
 
+mkdir android
 wget https://dl.google.com/android/repository/commandlinetools-mac-7583922_latest.zip
 unzip -q commandlinetools-mac-7583922_latest.zip -d ./
 mv cmdline-tools ./android/
